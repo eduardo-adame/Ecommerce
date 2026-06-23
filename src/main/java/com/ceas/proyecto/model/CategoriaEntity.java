@@ -9,12 +9,13 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name = "proveedor")
+@Table(name = "categoria")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProveedorEntity {
+public class CategoriaEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,15 +28,5 @@ public class ProveedorEntity {
     private String descripcion;
 
     @Column(nullable = false, length = 100)
-    private String direccion;
-
-    @Column(nullable = false, length = 100)
-    private String telefono;
-
-    @Column(nullable = false, length = 100)
-    private String correo;
-
-    @Column(nullable = false, length = 100)
     private long productoId;
-    
 }
