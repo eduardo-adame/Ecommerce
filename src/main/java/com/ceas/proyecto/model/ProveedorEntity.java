@@ -37,5 +37,4 @@ public class ProveedorEntity {
 
     @Column(nullable = false, length = 100)
     private long productoId;
-    
 }

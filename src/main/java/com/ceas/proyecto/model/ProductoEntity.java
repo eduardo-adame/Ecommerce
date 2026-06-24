@@ -17,7 +17,7 @@ import lombok.*;
 public class ProductoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NonNull
 
     @Column(nullable = false, length = 100)

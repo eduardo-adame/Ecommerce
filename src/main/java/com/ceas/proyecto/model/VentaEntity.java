@@ -33,5 +33,4 @@ public class VentaEntity {
 
     @Column(nullable = false)
     private long productoId;
-
 }
