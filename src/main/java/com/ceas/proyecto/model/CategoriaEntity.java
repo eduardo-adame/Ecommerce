@@ -10,15 +10,14 @@ import lombok.*;
 
 @Entity
 @Table(name = "categoria")
-@Getter @Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class CategoriaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NonNull
 
     @Column(nullable = false, length = 100)
@@ -27,6 +26,4 @@ public class CategoriaEntity {
     @Column(nullable = false, length = 500)
     private String descripcion;
 
-    @Column(nullable = false, length = 100)
-    private long productoId;
 }

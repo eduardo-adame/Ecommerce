@@ -45,8 +45,13 @@ public class ProductoController {
 
     //Endpoint para actualizar un producto
     @PutMapping("/{id}")
-    public ResponseEntity<ProductoEntity> actualizar(@PathVariable Long id, @RequestBody ProductoEntity producto) {
-        return ResponseEntity.ok(productoService.actualizarProducto(id, producto));
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody ProductoEntity producto) {
+        try{
+            ProductoEntity productoAct = productoService.actualizarProducto(id, producto);
+        return ResponseEntity.ok(productoAct);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     //Endpoint para eliminar un producto por su id

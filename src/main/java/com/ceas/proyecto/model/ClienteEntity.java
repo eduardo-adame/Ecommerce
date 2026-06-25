@@ -11,14 +11,14 @@ import lombok.*;
 
 @Entity
 @Table(name = "cliente")
-@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NonNull
 
     @Column(nullable = false, length = 100)
@@ -30,5 +30,8 @@ public class ClienteEntity {
     @Column(nullable = false, length = 100)
     private String correo;
 
-    
+    @Column(nullable = false, length = 20)
+    private String telefono;
+
 }
+

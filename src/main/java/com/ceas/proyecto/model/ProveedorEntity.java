@@ -17,14 +17,11 @@ import lombok.*;
 public class ProveedorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @NonNull
 
     @Column(nullable = false, length = 100)
     private String nombre;
-
-    @Column(nullable = false, length = 500)
-    private String descripcion;
 
     @Column(nullable = false, length = 100)
     private String direccion;
@@ -34,7 +31,4 @@ public class ProveedorEntity {
 
     @Column(nullable = false, length = 100)
     private String correo;
-
-    @Column(nullable = false, length = 100)
-    private long productoId;
 }
