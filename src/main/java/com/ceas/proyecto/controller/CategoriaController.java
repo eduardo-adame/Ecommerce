@@ -32,8 +32,12 @@ public class CategoriaController {
 
     //Endpoint para obtener una categoria por su id
     @GetMapping("/{id}")
-    public ResponseEntity<CategoriaEntity> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(categoriaService.obtenerPorId(id));
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(categoriaService.obtenerPorId(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     //Endpoint para guardar una categoria

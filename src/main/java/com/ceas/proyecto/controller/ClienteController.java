@@ -32,8 +32,12 @@ public class ClienteController {
 
     //Endpoint para obtener un cliente por su id
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteEntity> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(clienteService.obtenerPorId(id));
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(clienteService.obtenerPorId(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     //Endpoint para guardar un cliente

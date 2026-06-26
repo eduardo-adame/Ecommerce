@@ -32,8 +32,12 @@ public class ProveedorController {
 
     //Endpoint para obtener un proveedor por su id
     @GetMapping("/{id}")
-    public ResponseEntity<ProveedorEntity> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(proveedorService.obtenerPorId(id));
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(proveedorService.obtenerPorId(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     //Endpoint para guardar un proveedor

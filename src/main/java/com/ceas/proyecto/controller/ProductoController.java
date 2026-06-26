@@ -32,8 +32,12 @@ public class ProductoController {
 
     //Endpoint para obtener un producto por su id
     @GetMapping("/{id}")
-    public ResponseEntity<ProductoEntity> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(productoService.obtenerPorId(id));
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(productoService.obtenerPorId(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     //Endpoint para guardar un producto

@@ -32,8 +32,12 @@ public class VentaController {
 
     //Endpoint para obtener una venta por su id
     @GetMapping("/{id}")
-    public ResponseEntity<VentaEntity> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(ventaService.obtenerPorId(id));
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(ventaService.obtenerPorId(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     //Endpoint para guardar una venta

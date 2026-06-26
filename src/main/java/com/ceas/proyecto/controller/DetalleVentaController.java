@@ -32,8 +32,12 @@ public class DetalleVentaController {
 
     //Endpoint para obtener un detalle de venta por su id
     @GetMapping("/{id}")
-    public ResponseEntity<DetalleVentaEntity> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(detalleVentaService.obtenerPorId(id));
+    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(detalleVentaService.obtenerPorId(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     //Endpoint para guardar un detalle de venta
