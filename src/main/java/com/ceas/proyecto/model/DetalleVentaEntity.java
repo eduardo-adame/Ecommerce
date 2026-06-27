@@ -13,9 +13,10 @@ import lombok.*;
 
 @Entity
 @Table(name = "detalle_venta")
-@Data
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class DetalleVentaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -28,6 +28,7 @@ public class DetalleVentaService {
                         "Detalle de venta no encontrado con id: " + id));
     }
 
+    //Guardar un detalle de venta
     @Transactional
     public DetalleVentaEntity guardarDetalleVenta(DetalleVentaEntity detalleVenta) {
         return repository.save(detalleVenta);

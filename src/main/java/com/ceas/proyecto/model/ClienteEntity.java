@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import lombok.*;
 
-
 @Entity
 @Table(name = "cliente")
 @NoArgsConstructor
@@ -19,7 +18,6 @@ public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
 
     @Column(nullable = false, length = 100)
     private String nombre;

@@ -21,7 +21,6 @@ public class ProductoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
 
     @Column(nullable = false, length = 100)
     private String nombre;

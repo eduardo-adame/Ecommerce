@@ -14,11 +14,13 @@ public class ProveedorService {
 
     private final ProveedorRepository repository;
 
+    //Leer todos los proveedores
     @Transactional(readOnly = true)
     public List<ProveedorEntity> obtenerTodos() {
         return repository.findAll();
     }
 
+    //Leer un proveedor por su id
     @Transactional(readOnly = true)
     public ProveedorEntity obtenerPorId(Long id) {
         return repository.findById(id)
@@ -26,11 +28,13 @@ public class ProveedorService {
                         "Proveedor no encontrado con id: " + id));
     }
 
+    //Guardar un proveedor
     @Transactional
     public ProveedorEntity guardarProveedor(ProveedorEntity proveedor) {
         return repository.save(proveedor);
     }
 
+    //Actualizar un proveedor
     @Transactional
     public ProveedorEntity actualizarProveedor(Long id, ProveedorEntity detalleProveedor) {
         ProveedorEntity proveedorExistente = repository.findById(id)
@@ -41,6 +45,7 @@ public class ProveedorService {
         return repository.save(proveedorExistente);
     }
 
+    //Eliminar un proveedor por su id
     @Transactional
     public void eliminarProveedor(Long id) {
         if (!repository.existsById(id)) {
