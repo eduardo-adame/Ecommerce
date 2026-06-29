@@ -1,7 +1,6 @@
 package com.ceas.proyecto.controller;
 
 import java.util.List;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +22,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class VentaController {
     private final VentaService ventaService;
 
+    //Procesar una venta
+    @PostMapping("/")
+    public ResponseEntity<VentaEntity> procesar(@RequestBody VentaEntity venta) {
+        return ResponseEntity.ok(ventaService.procesarVenta(venta));
+    }
+
     //Endpoint para listar todas las ventas
     @GetMapping("/")
     public ResponseEntity<List<VentaEntity>> listar() {
@@ -37,13 +42,6 @@ public class VentaController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
-    }
-
-    //Endpoint para guardar una venta
-    @PostMapping("/")
-    public ResponseEntity<VentaEntity> guardar(@RequestBody VentaEntity venta) {
-        VentaEntity nuevo = ventaService.guardarVenta(venta);
-        return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
     }
 
     //Endpoint para actualizar una venta
