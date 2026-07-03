@@ -1,6 +1,7 @@
 package com.ceas.proyecto.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.CascadeType;
@@ -44,4 +45,9 @@ public class VentaEntity {
     //Relacion con detalle venta
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleVentaEntity> detalles = new ArrayList<>();
+
+    public void setFecha(LocalDateTime now) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setFecha'");
+    }
 }

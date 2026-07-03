@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController 
 @RequestMapping("/api/v1/productos") //Mapeo de la ruta para el controlador
-@CrossOrigin(origins = "http://localhost:3000") //Permiso a React para consumir la API
+@CrossOrigin(origins = "http://localhost:5173") //Permiso a React para consumir la API
 @RequiredArgsConstructor //Inyección de dependencias
 public class ProductoController {
     private final ProductoService productoService;
