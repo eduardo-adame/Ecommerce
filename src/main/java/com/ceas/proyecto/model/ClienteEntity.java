@@ -23,13 +23,13 @@ public class ClienteEntity {
     private String nombre;
 
     @Column(nullable = false, length = 100)
-    private String apellido;
-
-    @Column(nullable = false, length = 100)
-    private String correo;
+    private String username;
 
     @Column(nullable = false, length = 20)
     private String telefono;
+
+    @Column(nullable = false, length = 200)
+    private String direccion;
 
 }
 
