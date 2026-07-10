@@ -1,6 +1,7 @@
 package com.ceas.proyecto.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import com.ceas.proyecto.dto.RegistroRequest;
 import com.ceas.proyecto.model.ClienteEntity;
 import com.ceas.proyecto.model.Rol;
@@ -9,6 +10,7 @@ import com.ceas.proyecto.repository.ClienteRepository;
 import com.ceas.proyecto.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 
+@Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
@@ -31,10 +33,7 @@ public class UsuarioService {
         usuario.setPassword(passwordEncoder.encode(request.getPassword()));
         usuario.setNombre(request.getNombre());
 
-        Rol rol = request.getRol() == null ? Rol.ROLE_CLIENTE : Rol.ROLE_ADMIN;
-        if(request.getRol() != null && request.getRol().equals("ROLE_ADMIN")) {
-            rol = Rol.ROLE_ADMIN;
-        }
+        Rol rol = "ROLE_ADMIN".equals(request.getRol()) ? Rol.ROLE_ADMIN : Rol.ROLE_CLIENTE;
         usuario.setRol(rol);
         UsuarioEntity savedUsuario = usuarioRepository.save(usuario);
 
