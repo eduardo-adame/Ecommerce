@@ -32,6 +32,7 @@ public class UsuarioService {
         usuario.setUsername(request.getUsername());
         usuario.setPassword(passwordEncoder.encode(request.getPassword()));
         usuario.setNombre(request.getNombre());
+        usuario.setApellido(request.getApellido());
 
         Rol rol = "ROLE_ADMIN".equals(request.getRol()) ? Rol.ROLE_ADMIN : Rol.ROLE_CLIENTE;
         usuario.setRol(rol);
@@ -41,6 +42,8 @@ public class UsuarioService {
             
             ClienteEntity cliente = new ClienteEntity();
             cliente.setNombre(request.getNombre());
+            cliente.setApellido(request.getApellido());
+            cliente.setCorreo(request.getUsername());
             cliente.setUsername(request.getUsername());
             cliente.setTelefono(request.getTelefono());
             cliente.setDireccion(request.getDireccion());

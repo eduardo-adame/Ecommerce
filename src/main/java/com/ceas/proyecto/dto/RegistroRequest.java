@@ -4,6 +4,7 @@ public class RegistroRequest {
     private String username;
     private String password;
     private String nombre;
+    private String apellido;
     private String telefono;
     private String direccion;
     private String rol;
@@ -25,6 +26,12 @@ public class RegistroRequest {
     }
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    public String getApellido() {
+        return apellido;
+    }
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
     public String getTelefono() {
         return telefono;
