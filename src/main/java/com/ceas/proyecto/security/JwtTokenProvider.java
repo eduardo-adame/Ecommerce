@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
@@ -32,8 +33,27 @@ private final Key key;
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
+        String rol = userPrincipal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .orElse("ROLE_CLIENTE");
+
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
+                .claim("rol", rol)
+                .setIssuedAt(new Date())
+                .setExpiration(expiryDate)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String generateToken(String username, String rol) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("rol", rol)
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS256)

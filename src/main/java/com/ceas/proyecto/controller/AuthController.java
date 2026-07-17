@@ -45,24 +45,27 @@ public class AuthController {
             String token = jwtTokenProvider.generateToken(authentication);
 
             String username = authentication.getName();
-            String nombre = usuarioRepository.findByUsername(username)
-                    .map(UsuarioEntity::getNombre)
-                    .orElse(username);
+            UsuarioEntity usuario = usuarioRepository.findByUsername(username)
+                    .orElse(null);
+            String nombre = usuario != null ? usuario.getNombre() : username;
+            String rol = usuario != null ? usuario.getRol().name() : "ROLE_CLIENTE";
 
-            return ResponseEntity.ok(new AuthResponse(token, username, nombre));
+            return ResponseEntity.ok(new AuthResponse(token, username, nombre, rol));
     
     }
 
     //Registro de usuario
     @PostMapping("/registro")
-    public ResponseEntity<String> registro(@RequestBody RegistroRequest request) {
+    public ResponseEntity<AuthResponse> registro(@RequestBody RegistroRequest request) {
         try {
             UsuarioEntity usuario = usuarioService.saveUsuario(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado exitosamente");
+            String token = jwtTokenProvider.generateToken(usuario.getUsername(), usuario.getRol().name());
+            AuthResponse response = new AuthResponse(token, usuario.getUsername(), usuario.getNombre(), usuario.getRol().name());
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al registrar el usuario");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }
