@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 @Entity
@@ -14,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProveedorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +24,12 @@ public class ProveedorEntity {
     @Column(nullable = false, length = 100)
     private String nombre;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String direccion;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String telefono;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String correo;
 }

@@ -1,6 +1,10 @@
 package com.ceas.proyecto.model;
 
 import jakarta.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +21,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class DetalleVentaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +39,7 @@ public class DetalleVentaEntity {
     //Relacion con venta
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "venta_id", nullable = false)
+    @JsonIgnore
     private VentaEntity venta;
 
     //Relacion con producto

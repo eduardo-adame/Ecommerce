@@ -28,6 +28,16 @@ public class VentaController {
         return ResponseEntity.ok(ventaService.procesarVenta(venta));
     }
 
+    //Endpoint para confirmar pago de una venta
+    @PutMapping("/{id}/pago")
+    public ResponseEntity<?> confirmarPago(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(ventaService.confirmarPago(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
     //Endpoint para listar todas las ventas
     @GetMapping("/")
     public ResponseEntity<List<VentaEntity>> listar() {

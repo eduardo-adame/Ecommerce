@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 @Entity
@@ -14,6 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CategoriaEntity {
 
     @Id
@@ -23,7 +25,7 @@ public class CategoriaEntity {
     @Column(nullable = false, length = 100)
     private String nombre;
 
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
     private String descripcion;
 
 }

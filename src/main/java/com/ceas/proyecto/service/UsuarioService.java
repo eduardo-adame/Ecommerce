@@ -8,7 +8,7 @@ import com.ceas.proyecto.model.Rol;
 import com.ceas.proyecto.model.UsuarioEntity;
 import com.ceas.proyecto.repository.ClienteRepository;
 import com.ceas.proyecto.repository.UsuarioRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioService {

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ceas.proyecto.model.ClienteEntity;
+import com.ceas.proyecto.model.VentaEntity;
 import com.ceas.proyecto.service.ClienteService;
+import com.ceas.proyecto.service.VentaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor
 public class ClienteController {
     private final ClienteService clienteService;
+    private final VentaService ventaService;
 
     //Endpoint para listar todos los clientes
     @GetMapping("/")
@@ -55,6 +58,12 @@ public class ClienteController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
+    }
+
+    //Endpoint para obtener las compras de un cliente
+    @GetMapping("/{id}/compras")
+    public ResponseEntity<List<VentaEntity>> obtenerCompras(@PathVariable Long id) {
+        return ResponseEntity.ok(ventaService.obtenerVentasPorClienteId(id));
     }
 
     //Endpoint para eliminar un cliente por su id

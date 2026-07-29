@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 @Entity
@@ -14,6 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

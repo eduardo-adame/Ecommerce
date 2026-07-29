@@ -3,6 +3,8 @@ package com.ceas.proyecto.security;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.springframework.core.env.Environment;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,10 +29,12 @@ public class SecurityConfig {
 
     private final JwtTokenProvider tokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
+    private final Environment environment;
 
-    public SecurityConfig(JwtTokenProvider tokenProvider, CustomUserDetailsService customUserDetailsService) {
+    public SecurityConfig(JwtTokenProvider tokenProvider, CustomUserDetailsService customUserDetailsService, Environment environment) {
         this.tokenProvider = tokenProvider;
         this.customUserDetailsService = customUserDetailsService;
+        this.environment = environment;
     }
 
     @Bean
@@ -72,9 +76,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/v1/proveedores/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/proveedores/**").hasAuthority("ROLE_ADMIN")
                 
-                .requestMatchers(HttpMethod.POST, "/api/v1/ventas").hasAnyAuthority("ROLE_CLIENTE", "ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/v1/ventas/**").hasAuthority("ROLE_CLIENTE")
                 .requestMatchers(HttpMethod.GET, "/api/v1/ventas").hasAuthority("ROLE_ADMIN")
-                .requestMatchers(HttpMethod.GET, "/api/v1/ventas/mis-compras").hasAuthority("ROLE_CLIENTE")
+                .requestMatchers(HttpMethod.GET, "/api/v1/clientes/*/compras").hasAnyAuthority("ROLE_CLIENTE", "ROLE_ADMIN")
                 .requestMatchers("/api/v1/pagos/**").hasAnyAuthority("ROLE_CLIENTE", "ROLE_ADMIN")
                 
                 .anyRequest().authenticated()
@@ -88,7 +92,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+        String allowedOrigin = environment.getProperty("spring.mvc.cors.allowed-origins", "http://localhost:5173");
+        configuration.setAllowedOrigins(Collections.singletonList(allowedOrigin));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
         configuration.setExposedHeaders(Collections.singletonList("Authorization"));

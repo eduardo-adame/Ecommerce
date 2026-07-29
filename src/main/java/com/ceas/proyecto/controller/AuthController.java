@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ceas.proyecto.dto.AuthRequest;
 import com.ceas.proyecto.dto.AuthResponse;
 import com.ceas.proyecto.dto.RegistroRequest;
+import com.ceas.proyecto.model.ClienteEntity;
 import com.ceas.proyecto.model.UsuarioEntity;
+import com.ceas.proyecto.repository.ClienteRepository;
 import com.ceas.proyecto.repository.UsuarioRepository;
 import com.ceas.proyecto.security.JwtTokenProvider;
 import com.ceas.proyecto.service.UsuarioService;
@@ -25,12 +27,14 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
+    private final ClienteRepository clienteRepository;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+    public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UsuarioService usuarioService, UsuarioRepository usuarioRepository, ClienteRepository clienteRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     @PostMapping("/login")
@@ -50,7 +54,11 @@ public class AuthController {
             String nombre = usuario != null ? usuario.getNombre() : username;
             String rol = usuario != null ? usuario.getRol().name() : "ROLE_CLIENTE";
 
-            return ResponseEntity.ok(new AuthResponse(token, username, nombre, rol));
+            ClienteEntity cliente = clienteRepository.findByUsername(username)
+                    .orElse(null);
+            Long clienteId = cliente != null ? cliente.getId() : null;
+
+            return ResponseEntity.ok(new AuthResponse(token, username, nombre, rol, clienteId));
     
     }
 
